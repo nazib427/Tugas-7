@@ -62,7 +62,6 @@ class DetailQuestPage extends StatelessWidget {
             
             const SizedBox(height: 24),
 
-            // 2. JUDUL & STATUS QUEST (Bersih tanpa background)
             Text(
               quest.title,
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: primaryDark),
@@ -84,9 +83,8 @@ class DetailQuestPage extends StatelessWidget {
             Divider(color: Colors.grey.shade300, thickness: 1.5),
             const SizedBox(height: 16),
 
-            // 3. DESKRIPSI & REWARD (Dibungkus Expanded agar tombol tetap di bawah)
             Expanded(
-              child: SingleChildScrollView( // Agar bisa di-scroll jika teksnya sangat panjang
+              child: SingleChildScrollView( 
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -111,7 +109,7 @@ class DetailQuestPage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFF8E1), // Kuning pucat
+                        color: const Color(0xFFFFF8E1), 
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.amber.shade300),
                       ),
@@ -134,7 +132,6 @@ class DetailQuestPage extends StatelessWidget {
             
             const SizedBox(height: 16),
 
-            // 4. TOMBOL TAKE QUEST
             SizedBox(
               width: double.infinity,
               height: 55,
@@ -148,7 +145,7 @@ class DetailQuestPage extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: quest.isTaken ? Colors.grey.shade400 : primaryDark,
                   disabledBackgroundColor: Colors.grey.shade400,
-                  elevation: quest.isTaken ? 0 : 5, // Hilangkan bayangan jika tombol mati
+                  elevation: quest.isTaken ? 0 : 5, 
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -161,13 +158,13 @@ class DetailQuestPage extends StatelessWidget {
     );
   }
 
-  // Helper widget untuk membuat "Chip/Badge" Rank dan Status
+
   Widget _buildBadge(String text, Color bgColor, Color textColor) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(20), // Bentuk pil (kapsul)
+        borderRadius: BorderRadius.circular(20), 
       ),
       child: Text(
         text,

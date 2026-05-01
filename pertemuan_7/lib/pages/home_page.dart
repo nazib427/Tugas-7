@@ -1,3 +1,4 @@
+// lib/pages/home_page.dart
 import 'package:flutter/material.dart';
 import '../models/app_models.dart';
 import '../widgets/header_widget.dart';
@@ -13,19 +14,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Tambahkan data agar mirip seperti gambar
   List<Quest> questList = [
     Quest(title: 'Defeat Black Bear', rank: 'A', reward: '500 Gold', imageAsset: 'assets/images/black_bear.jpg', desc: 'Defeat the bear in the dark forest.', isTaken: true),
     Quest(title: 'Find Mana Core', rank: 'C', reward: 'Mana Potion', imageAsset: 'assets/images/mana_core.jpg', desc: 'Search for mana core in the cave.'),
     Quest(title: 'Defeat Ancient Dragon', rank: 'SSS', reward: 'Dragon Sword', imageAsset: 'assets/images/ancient_dragon.jpg', desc: 'Save the world!'),
     Quest(title: 'Search Herb Plant', rank: 'F', reward: '10 Gold', imageAsset: 'assets/images/herb_plant.jpg', desc: 'Gather herbs for the local doctor.'),
-    Quest(title: 'Mine Iron', rank: 'E', reward: 'Iron Ores', imageAsset: 'assets/images/mine_iron.jpg', desc: 'Work in the mines.'),
+    Quest(title: 'Mine Iron', rank: 'E', reward: 'Iron Ores', imageAsset: 'assets/images/iron_ore.jpg', desc: 'Work in the mines.'),
   ];
 
   @override
   Widget build(BuildContext context) {
-    const Color bgScaffold = Color(0xFFFAFAFA); // Putih sedikit abu-abu
-    const Color appBarColor = Color(0xFFB2EBF2); // Cyan muda
+    const Color bgScaffold = Color(0xFFFAFAFA); 
+    const Color appBarColor = Color(0xFFB2EBF2); 
+    const Color primaryDark = Color(0xFF1E5B5B); 
 
     return Scaffold(
       backgroundColor: bgScaffold,
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: appBarColor,
         elevation: 0,
+        automaticallyImplyLeading: false, 
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -55,36 +57,67 @@ class _HomePageState extends State<HomePage> {
                 itemCount: questList.length,
                 itemBuilder: (context, index) {
                   final quest = questList[index];
+                  
                   return Container(
                     margin: const EdgeInsets.only(bottom: 12),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: quest.isTaken ? const Color(0xFFF0FDF8) : Colors.white, 
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey.shade300), 
+                      border: Border.all(
+                        // Border lebih tebal dan berwarna teal gelap jika quest aktif
+                        color: quest.isTaken ? primaryDark.withOpacity(0.5) : Colors.grey.shade300,
+                        width: quest.isTaken ? 1.5 : 1.0, 
+                      ),
                     ),
                     child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       leading: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFC4EBE7), // Background kotak icon
+                          // Latar ikon diubah menjadi gelap jika quest aktif
+                          color: quest.isTaken ? primaryDark : const Color(0xFFC4EBE7), 
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: Image.asset(
-                          quest.imageAsset,
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
+                        child: Icon(
+                          quest.isTaken ? Icons.check_circle : Icons.circle_outlined,
+                          // Warna ikon menjadi putih terang jika aktif
+                          color: quest.isTaken ? Colors.white : primaryDark, 
+                          size: 28,
                         ),
                       ),
                       title: Text(
                         quest.title,
-                        style: const TextStyle(fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: quest.isTaken ? primaryDark : Colors.black87, 
+                        ),
                       ),
-                      subtitle: Text('Rank: ${quest.rank}', style: const TextStyle(fontSize: 13)),
-                      trailing: const Icon(Icons.chevron_right, color: Color(0xFF1E5B5B)),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Row(
+                          children: [
+                            Text('Rank: ${quest.rank}', style: const TextStyle(fontSize: 13)),
+                            
+                            // --- TANDA BACA QUEST AKTIF (BADGE) ---
+                            if (quest.isTaken) ...[
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: Colors.green.shade100,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: const Text(
+                                  'Active',
+                                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.green),
+                                ),
+                              ),
+                            ]
+                          ],
+                        ),
+                      ),
+                      trailing: Icon(Icons.chevron_right, color: primaryDark),
                       onTap: () async {
-                        // Logika yang sama: Buka halaman detail, tunggu balikan true/false
                         final result = await Navigator.push(
                           context,
                           MaterialPageRoute(

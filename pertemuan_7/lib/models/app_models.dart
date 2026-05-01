@@ -1,13 +1,15 @@
-// lib/models/app_models.dart
+
 
 class UserData {
   final String nama;
+  final String password;
   final String level;
   final String rank;
   final String job;
 
   UserData({
     required this.nama,
+    required this.password,
     required this.level,
     required this.rank,
     required this.job,

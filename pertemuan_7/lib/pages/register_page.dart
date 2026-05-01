@@ -25,24 +25,21 @@ class _RegisterPageState extends State<RegisterPage> {
   final Color appBarColor = const Color(0xFFB2EBF2);
 
   void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      final userData = UserData(
-        nama: _namaController.text,
-        level: _levelController.text,
-        rank: _rankController.text,
-        job: _jobController.text,
-      );
+      if (_formKey.currentState!.validate()) {
+        final userData = UserData(
+          nama: _namaController.text,
+          password: _passwordController.text, 
+          level: _levelController.text,
+          rank: _rankController.text,
+          job: _jobController.text,
+        );
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(userData: userData),
-        ),
-      );
+        
+        Navigator.pop(context, userData);
+      }
     }
-  }
 
-  // Helper untuk desain kotak input (TextFormField) agar serasi
+  
   InputDecoration _buildInputDecor(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
@@ -89,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
           key: _formKey,
           child: Column(
             children: [
-              // Logo atau Icon Guild di atas form
+              
               Icon(Icons.shield_moon, size: 80, color: primaryDark),
               const SizedBox(height: 8),
               const Text(

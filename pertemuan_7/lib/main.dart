@@ -1,6 +1,6 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
-import 'pages/register_page.dart';
+import 'pages/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,8 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Tugas UTS Mobile',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const RegisterPage(), // Memulai dari Register Page
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.teal),
+      home: const LoginPage(), // Memulai dari Login Page
     );
   }
 }
